@@ -3,6 +3,56 @@
     margin: 0;
 }
 
+/* BUTTON */
+button {
+    width:50px;
+    height:50px;
+    display:inline-block;
+    font-size:16px;
+    font-weight:bold;
+    color:#fff;
+    text-decoration:none;
+    text-transform:uppercase;
+    text-align:center;
+    text-shadow:1px 1px 0px #07526e;
+    padding-top:6px;
+    margin-left:auto;
+    margin-right:auto;
+    left:30px;
+    position:relative;
+    cursor:pointer;
+    border: none;
+    background: #109bce;
+    background-image: linear-gradient(bottom, rgb(14,137,182) 0%, rgb(22,179,236) 100%);
+    border-radius: 5px;
+    box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #07526e, 0px 10px 5px #999;
+}
+
+button:active {
+    top:3px;
+    box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #07526e, 0px 5px 3px #999;
+}
+
+
+/* INPUT */
+.f-input {
+    padding: 10px;
+    border: none;
+    background: none;
+    border: 1px dashed #708b55;
+    width: 300px;
+    height: 50px;
+    font-size: 30px;
+    color: #2b391d;
+    font-family: 'Lobster', cursive;
+    transition: border 0.5s;
+}
+.f-input:focus,
+.f-input.focus {
+    border: 1px dashed #263319;
+    outline: 0;
+}
+
 #wrapper {
     position: absolute;
     top: 0;
@@ -48,22 +98,4 @@ div#tester {
 span#entailment {
     font-size: 30px;
     margin: 0 30px;
-}
-
-.f-input {
-    padding: 10px;
-    border: none;
-    background: none;
-    border: 1px dashed #708b55;
-    width: 300px;
-    height: 50px;
-    font-size: 30px;
-    color: #2b391d;
-    font-family: 'Lobster', cursive;
-    transition: border 0.5s;
-}
-.f-input:focus,
-.f-input.focus {
-    border: 1px dashed #263319;
-    outline: 0;
 }
