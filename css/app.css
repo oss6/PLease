@@ -5,9 +5,9 @@
 
 /* BUTTON */
 button {
-    width:50px;
-    height:50px;
+    padding: 8px 15px;
     display:inline-block;
+    font-family: 'Lobster', cursive;
     font-size:16px;
     font-weight:bold;
     color:#fff;
@@ -22,15 +22,19 @@ button {
     position:relative;
     cursor:pointer;
     border: none;
-    background: #109bce;
+    background: #60a356;
     background-image: linear-gradient(bottom, rgb(14,137,182) 0%, rgb(22,179,236) 100%);
     border-radius: 5px;
-    box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #07526e, 0px 10px 5px #999;
+    box-shadow: inset 0px 1px 0px #60a356, 0px 5px 0px 0px #2e652c, 0px 10px 5px #aeaeae;
+}
+
+button:focus {
+    outline: none;
 }
 
 button:active {
     top:3px;
-    box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #07526e, 0px 5px 3px #999;
+    box-shadow: inset 0px 1px 0px #60a356, 0px 2px 0px 0px #2e652c, 0px 5px 3px #aeaeae;
 }
 
 
@@ -87,15 +91,30 @@ div#tester {
     margin: 0 0 50px 0;
 }
 
-#output {
-    
+div#output {
+    margin: auto;
+    width: 50%;
+}
+
+button#eval {
+    font-weight: 100;
+    text-transform: none;
 }
 
 #output h2#result {
-    text-align: center;
+    
 }
 
 span#entailment {
     font-size: 30px;
     margin: 0 30px;
+}
+
+div#footer {
+    display: block;
+    margin: 50px auto 0 auto;
+    margin-top: 50px;
+    border: 1px dashed #454545;
+    padding: 20px 10px 26px 10px;
+    width: 50%;
 }
