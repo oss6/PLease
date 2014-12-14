@@ -1,4 +1,4 @@
-(function (undefined) {
+var pl = (function (undefined) {
     // Variables
     var op_map = {
         '→': 'IMPL',
@@ -41,6 +41,8 @@
             var val = arr[i];
             new_arr.push(op_map[val] !== undefined ? op_map[val] : val);
         }
+        
+        return new_arr;
     };
     
     // Convert from "prem, prem, prem : concl" -> "(prem and prem and prem) -> concl
@@ -90,6 +92,8 @@
             
             out_queue.push(stack.pop());
         }
+        
+        console.log(map(out_queue));
         
         return map(out_queue);
     };
@@ -179,6 +183,9 @@
     
     // arg = "prem,prem,prem:concl" --> gets no spaces etc...
     var eval = function (arg) {
+        arg = arg.replace(/ /g, '');
+        console.log(arg);
+        
         var parsed = parse(arg),
             props = get_props(parsed),
             prop_inst = to_prop_inst(props),
