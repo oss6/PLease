@@ -24,7 +24,7 @@
         }
         
         return null;
-    }
+    };
     
     var implify = function (str) {
         var arg = str.split(':');
@@ -61,6 +61,10 @@
             else if (token === ')') {
                 while (stack.length > 0 && stack[stack.length - 1] !== '(')
                     out_queue.push(stack.pop());
+                
+                // If stack is empty...
+                
+                stack.pop();
             }
             // Proposition
             else {
@@ -85,7 +89,12 @@
     
     // arg = "prem,prem,prem:concl" --> gets no spaces etc...
     var eval = function (arg) {
+        var tokens = parse(arg),
+            len = tokens.length;
         
+        for (var i = 0; i < len; i++) {
+            
+        }
     };
     
     return {
