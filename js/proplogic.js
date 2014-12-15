@@ -40,8 +40,9 @@ var pl = (function (undefined) {
             premises = prem_tmp.map(function (str) {
                 return '(' + str + ')'; 
             });
+            
         
-        return '(' + premises.join('∧') + ')→' + arg[1];
+        return '(' + premises.join('∧') + ')→(' + arg[1] + ')';
     };
     
     var map = function (arr) {
@@ -135,7 +136,8 @@ var pl = (function (undefined) {
         
         switch (operator) {
                 case 'NOT':
-                
+                    for (var i = 0; i < n; i++)
+                        result.push(!operands[0][i]);
                 break;
                 case 'AND':
                     var op1 = operands[0],
@@ -228,6 +230,8 @@ var pl = (function (undefined) {
     var eval = function (arg) {
         arg = implify(arg.replace(/ /g, ''));
         
+        console.log(arg);
+        
         var parsed = parse(arg),
             props = get_props(parsed),
             prop_inst = to_prop_inst(props),
@@ -246,11 +250,13 @@ var pl = (function (undefined) {
             
             // Proposition
             if (is_array(token)) { // key.indexOf(operators) === -1
+                console.log('proposition');
                 stack.push(token);
                 console.log(stack);
             }
             // Operator
             else {
+                console.log('operator');
                 var n = arity[token],
                     args = [];
                 
@@ -260,11 +266,12 @@ var pl = (function (undefined) {
                 for (var j = 0; j < n; j++)
                     args.push(stack.pop());
                 
+                if (token === 'IMPL')
+                    args.reverse();
+                
                 var result = eval_expr(args, token);
                 stack.push(result);
             }
-            
-            console.log(stack);
         }
         
         if (stack.length === 1) {

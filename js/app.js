@@ -5,18 +5,19 @@ window.onload = function () {
         concl_input = document.getElementById('concl'),
         fprem = true;
     
+    // Premise button listener
     prem_input.addEventListener('focus', function () {
         fprem = true;
     }, false);
     
+    // Conclusion button listener
     concl_input.addEventListener('focus', function () {
         fprem = false;
     }, false);
     
+    // Operator buttons' listeners
     for (var i = 0; i < operators.length; i++) {
         operators[i].addEventListener('click', function (e) {
-            console.log(document.activeElement);
-            
             if (fprem) {
                 prem_input.value += e.srcElement.innerText;
                 prem_input.focus();
@@ -28,6 +29,7 @@ window.onload = function () {
         }, false);
     }
     
+    // Eval button listener
     eval_btn.addEventListener('click', function (e) {
         //prem,prem,prem:concl
         // Construct string
@@ -35,10 +37,12 @@ window.onload = function () {
             concl = concl_input.value;
         
         if (prem === '' || concl === '') {
-            alert('hold on!');  
+            alert('Hold on!');  
         }
         else {
-            pl.eval(prem + ':' + concl);
+            if (pl.eval(prem + ':' + concl))
+                alert("Valid argument!");
+            else alert("Invalid argument!");
         }
     }, false);
 };
