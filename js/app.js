@@ -3,6 +3,8 @@ window.onload = function () {
         operators = document.getElementsByClassName('operator'),
         prem_input = document.getElementById('prem'),
         concl_input = document.getElementById('concl'),
+        result_tooltip = document.getElementById('result'),
+        tooltip_trigger = document.getElementById('trigger'),
         fprem = true;
     
     // Premise button listener
@@ -13,6 +15,14 @@ window.onload = function () {
     // Conclusion button listener
     concl_input.addEventListener('focus', function () {
         fprem = false;
+    }, false);
+    
+    tooltip_trigger.addEventListener('click', function () {
+        var classes = result_tooltip.className.split(' ');
+        
+        classes.splice(classes.indexOf('hover'), 1);
+        result_tooltip.className = classes;
+        result_tooltip.innerHTML = '';
     }, false);
     
     // Operator buttons' listeners
@@ -37,12 +47,22 @@ window.onload = function () {
             concl = concl_input.value;
         
         if (prem === '' || concl === '') {
-            alert('Hold on!');  
+            result_tooltip.innerHTML = 'Give me something!'; 
         }
         else {
-            if (pl.eval(prem + ':' + concl))
-                alert("Valid argument!");
-            else alert("Invalid argument!");
+            
+            
+            if (pl.eval(prem + ':' + concl)) {
+                //alert("Valid argument!");
+                result_tooltip.innerHTML = 'Argument valid!';
+            }
+            else {
+                //alert("Invalid argument!");
+                
+                result_tooltip.innerHTML = 'Argument invalid!';
+            }
         }
+        
+        result_tooltip.className = result_tooltip.className + " hover";
     }, false);
 };

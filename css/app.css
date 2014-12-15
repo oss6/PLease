@@ -5,7 +5,7 @@
 
 /* BUTTON */
 button {
-    padding: 8px 15px;
+    padding: 2% 5%; /* 8 - 15*/
     display:inline-block;
     font-family: 'Lobster', cursive;
     font-size:16px;
@@ -44,7 +44,7 @@ button:active {
     border: none;
     background: none;
     border: 1px dashed #708b55;
-    width: 300px;
+    width: 20%; /* 300px */
     height: 50px;
     font-size: 30px;
     color: #2b391d;
@@ -58,7 +58,8 @@ button:active {
 }
 
 #wrapper {
-    position: absolute;
+    position: fixed;
+    overflow: auto;
     top: 0;
     left: 0;
     width: 100%;
@@ -74,7 +75,7 @@ button:active {
 #wrapper h1#title {
     font-family: 'Lobster', cursive;
     font-size: 60px;
-    color: #fff;
+    color: #ddedd5;
     text-shadow: 1px 1px #000;
     text-align: center;
 }
@@ -84,6 +85,7 @@ button:active {
     font-weight: 100;
     font-size: 23px;
     text-align: center;
+    color: #172917;
 }
 
 div#tester {
@@ -112,13 +114,112 @@ span#entailment {
 
 div#footer {
     display: block;
-    margin: 50px auto 0 auto;
-    margin-top: 50px;
-    border: 1px dashed #454545;
-    padding: 20px 10px 26px 10px;
+    margin: 0 auto 45px auto;
     width: 50%;
 }
 
 #footer div#instructions {
-    
+    display: block;
+    margin: 10px auto 0 auto;
+    width: 50%;
+}
+
+#footer #instructions button {
+    margin: 10px 0 0 0;
+}
+
+div#mastfoot {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    color: #293818;
+}
+
+/* SPACER */
+.or-spacer {
+    display: block;
+    margin: 0 auto 50px auto;
+    width:30%;
+    position:relative;
+}
+.or-spacer .mask {
+    overflow:hidden;
+    height:20px;
+}
+.or-spacer .mask:after {
+    content:'';
+    display:block;
+    margin:-25px auto 0;
+    width:100%;
+    height:25px;
+    border-radius:125px / 12px;
+    box-shadow:0 0 8px black;
+}
+.or-spacer span {
+    width:50px;
+    height:50px;
+    position:absolute;
+    bottom:100%;
+    margin-bottom:-25px;
+    left:50%;
+    margin-left:-25px;
+    border-radius:100%;
+    box-shadow:0 2px 4px #999;
+    background:#2b391d;
+    cursor: pointer;
+}
+.or-spacer span i {
+    position:absolute;
+    top:4px;
+    bottom:4px;
+    left:4px;
+    right:4px;
+    border-radius:100%;
+    border:1px dashed #ccc;
+    text-align:center;
+    line-height:40px;
+    font-style:normal;
+    color:#ccc; 
+}
+
+/* TOOLTIPS */
+span.tooltips {
+  /*position: relative;*/
+  /*display: inline;*/
+}
+
+span.tooltips span {
+  position: absolute;
+  width:140px;
+  color: #fff;
+  background: #132405;
+  height: 44px;
+  line-height: 44px;
+  text-align: center;
+  visibility: hidden;
+  border-radius: 5px;
+}
+
+span.tooltips span:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -8px;
+  width: 0; height: 0;
+  border-right: 8px solid #132405;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+
+span.tooltips span.hover {
+  visibility: visible;
+  opacity: 0.9;
+  left: 100%;
+  top: 50%;
+  margin-top: -22px;
+  margin-left: 15px;
+  z-index: 999;
 }
