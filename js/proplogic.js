@@ -15,6 +15,14 @@ var pl = (function (undefined) {
     };
     
     // Functions
+    var is_array = function (obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]'; 
+    };
+    
+    var impl = function (p1, p2) {
+        return (p1 && p2) || (!p1 && p2) || (!p1 && !p2);
+    };
+    
     var get_precedence = function (operator) {
         switch (operator) {
                 case 'NOT': return 4;
@@ -27,8 +35,12 @@ var pl = (function (undefined) {
     };
     
     var implify = function (str) {
-        var arg = str.split(':');
-        var premises = arg[0].split(',');
+        var arg = str.split(':'),
+            prem_tmp = arg[0].split(','),
+            premises = prem_tmp.map(function (str) {
+                return '(' + str + ')'; 
+            });
+        
         return '(' + premises.join('∧') + ')→' + arg[1];
     };
     
@@ -49,7 +61,7 @@ var pl = (function (undefined) {
     // Queue: enq -> push, deq -> shift
     // Stack: enq -> push, deq -> pop
     var parse = function (str) {
-        var tokens = implify(str).split(''),
+        var tokens = str.split(''),
             len = tokens.length,
             stack = [],
             out_queue = [];
@@ -105,23 +117,50 @@ var pl = (function (undefined) {
         for (var i = 0; i < arr.length; i++) {
             var val = arr[i];
             
-            if (op_map[val] === undefined)
+            if (new_arr.indexOf(val) === -1 && operators.indexOf(val) === -1)
                 new_arr.push(val);
         }
+        
+        console.log('get_props: ' + new_arr);
+        
+        return new_arr;
     };
     
     /**
         PROP => [T, T, T, T ....]
     */
     var eval_expr = function (operands, operator) {
+        var result = [],
+            n = operands[0].length;
+        
         switch (operator) {
                 case 'NOT':
                 
                 break;
-                case 'AND': break;
-                case 'OR': break;
-                case 'IMPL': break;
+                case 'AND':
+                    var op1 = operands[0],
+                        op2 = operands[1];
+
+                    for (var i = 0; i < n; i++)
+                        result.push(op1[i] && op2[i]);
+                break;
+                case 'OR':
+                    var op1 = operands[0],
+                        op2 = operands[1];
+
+                    for (var i = 0; i < n; i++)
+                        result.push(op1[i] || op2[i]);
+                break;
+                case 'IMPL':
+                    var op1 = operands[0],
+                        op2 = operands[1];
+
+                    for (var i = 0; i < n; i++)
+                        result.push(impl(op1[i], op2[i]));
+                break;
         }
+        
+        return result;
     };
     
     // n = number of elements
@@ -143,9 +182,10 @@ var pl = (function (undefined) {
     var get_keys = function (obj) {
         var keys = [];
         
-        for(var key in obj) {
+        for (var key in obj) {
             keys.push(key);
         }
+        
         return keys;
     }
     
@@ -153,15 +193,18 @@ var pl = (function (undefined) {
     var to_prop_inst = function (props) {
         var n = props.length,
             combs = Math.pow(2, n),
-            new_arr = [],
+            new_arr = {}, // []
             props_rev = props.reverse();
         
         for (var i = 0; i < n; i++) {
-            var new_val = {};
+            //var new_val = {};
             
-            new_val[props[i]] = fill(combs, Math.pow(2, i));
-            new_arr.push(new_val);
+            new_arr[props[i]] = fill(combs, Math.pow(2, i));
+            /*new_val[props[i]] = fill(combs, Math.pow(2, i));
+            new_arr.push(new_val);*/
         }
+        
+        console.log('to_prop_inst: ' + new_arr);
         
         return new_arr;
     };
@@ -183,8 +226,7 @@ var pl = (function (undefined) {
     
     // arg = "prem,prem,prem:concl" --> gets no spaces etc...
     var eval = function (arg) {
-        arg = arg.replace(/ /g, '');
-        console.log(arg);
+        arg = implify(arg.replace(/ /g, ''));
         
         var parsed = parse(arg),
             props = get_props(parsed),
@@ -193,16 +235,20 @@ var pl = (function (undefined) {
             len = tokens.length,
             stack = [];
         
+        console.log(prop_inst);
+        console.log(tokens);
+        
         // Convert propositions to instantiations
-        // [{'p': [T; T; F; F]}, {'q': ...}, ...];
         
         for (var i = 0; i < len; i++) {
-            var token = tokens[i],
-                key = get_keys(token);
+            var token = tokens[i];
+                //key = get_keys(token);
             
             // Proposition
-            if (key.indexOf(operators) === -1)
+            if (is_array(token)) { // key.indexOf(operators) === -1
                 stack.push(token);
+                console.log(stack);
+            }
             // Operator
             else {
                 var n = arity[token],
@@ -211,19 +257,28 @@ var pl = (function (undefined) {
                 if (stack.length < n)
                     return false; // (Error) The user has not input sufficient values in the expression
                 
-                for (var i = 0; i < n; i++)
-                    args.push(stack.pop()); 
+                for (var j = 0; j < n; j++)
+                    args.push(stack.pop());
                 
                 var result = eval_expr(args, token);
                 stack.push(result);
             }
+            
+            console.log(stack);
         }
         
         if (stack.length === 1) {
             // check result
             console.log(stack[0]);
+            
+            var res = stack[0];
+            for (var i = 0; i < res.length; i++)
+                if (!res[i]) return false;
+            
+            return true;
         }
         else {
+            console.log("noooo");
             return false; // (Error) The user input has too many values   
         }
     };
