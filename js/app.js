@@ -54,12 +54,12 @@ window.onload = function () {
             
             if (pl.eval(prem + ':' + concl)) {
                 //alert("Valid argument!");
-                result_tooltip.innerHTML = 'Argument valid!';
+                result_tooltip.innerHTML = 'Valid argument!';
             }
             else {
                 //alert("Invalid argument!");
                 
-                result_tooltip.innerHTML = 'Argument invalid!';
+                result_tooltip.innerHTML = 'Invalid argument!';
             }
         }
         
